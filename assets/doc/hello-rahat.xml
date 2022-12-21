@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+    <Say>Hello from rahat</Say>
+    <Play>https://twiml.rahat.io/audio/hello.mp3</Play>
+</Response>
