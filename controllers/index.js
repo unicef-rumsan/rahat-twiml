@@ -6,7 +6,11 @@ const sampleMessage = async (req, res) => {
     const response = new VoiceResponse();
     response.say('Hello from rahat');
     response.play(`${APP_URL}/audio/hello.mp3`);
-    res.status(200).send(response.toString())
+    
+    const newRes = response.toString();
+
+    res.type('application/xml');
+    res.send(newRes)
 }
 
 module.exports = { sampleMessage }
