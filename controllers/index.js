@@ -7,12 +7,11 @@ const sampleMessage = async (req, res) => {
     response.say({
         voice: 'alice'
     },'Hello from Rahat voip demo.');
-    // response.play(`${APP_URL}/audio/hello.mp3`);
+    response.play(`${APP_URL}/audio/hello.mp3`);
     
     const newRes = response.toString();
-
-    res.setHeader('content-type', 'text/xml');
-    res.send(newRes)
+    res.type('text/xml');
+    res.send(newRes);
 }
 
 module.exports = { sampleMessage }
