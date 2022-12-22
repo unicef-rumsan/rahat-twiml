@@ -17,13 +17,13 @@ const audio = async (req,res) => {
 
 
 const ivr = async (req, res) => {
-    const AUDIO_URL = `${APP_URL}/audio/hello.mp3`;
+    // const AUDIO_URL = `${APP_URL}/audio/hello.mp3`;
     const response = new VoiceResponse();
     response.say({
         voice: 'alice'
     }, 'Hello from Rahat voip demo.');
     // response.gather()
-    response.play(AUDIO_URL);
+    // response.play(AUDIO_URL);
 
     function gather() {
         const gatherNode = response.gather({ numDigits: 1, action: `${APP_URL}/api/v1/ivr`, method: 'POST' });
