@@ -1,4 +1,5 @@
 const twilio = require("twilio");
+const JWT = require("jsonwebtoken");
 const VoiceResponse = twilio.twiml.VoiceResponse;
 const APP_URL = process.env.APP_DOMAIN;
 
@@ -13,7 +14,6 @@ const audio = async (req, res) => {
     }, AUDIO_URL);
     res.type('text/xml').send(response.toString());
 }
-
 
 
 const ivr = async (req, res) => {
@@ -71,4 +71,19 @@ const ivr = async (req, res) => {
 }
 
 
-module.exports = { ivr, audio }
+const webhook = async (req, res) => {
+    console.log("web hook called");
+
+    const decoded = await JWT.decode(
+        req.headers["Authorization"].sub("Bearer ", ""),
+        "jcupsROB9XzVTwwEpmoAqrgBCiex620R",
+        // true,
+        // "HS256",
+        // "true",
+        // "Somleng"
+    )
+
+    console.log("deoced jwt", decoded);
+}
+
+module.exports = { ivr, audio, webhook }
