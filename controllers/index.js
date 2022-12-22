@@ -26,14 +26,13 @@ const ivr = async (req, res) => {
     // response.play(AUDIO_URL);
 
     function gather() {
-        // const gatherNode = response.gather({ numDigits: 1, action: `${APP_URL}/api/v1/ivr`, method: 'POST' });
-        const gatherNode = response.gather({ numDigits: 1 });
+        const gatherNode = response.gather({ numDigits: 1, action: `${APP_URL}/api/v1/ivr`, method: 'POST' });
+        // const gatherNode = response.gather({ numDigits: 1 });
         gatherNode.say('For sales, press 1. For support, press 2.');
         // If the user doesn't enter input, loop
         response.redirect({
-            uri: `/api/v1/ivr`,
             method: 'POST'
-        });
+        }, `${APP_URL}/api/v1/ivr` );
     }
 
     // If the user entered digits, process their request
