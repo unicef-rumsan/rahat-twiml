@@ -24,11 +24,10 @@ const sampleMessage = async (req, res) => {
     }
 
     // If the user entered digits, process their request
-    req.body.Digits = 1;
     if (req.body?.Digits) {
         switch (req.body?.Digits) {
             case '1':
-                response.say('You selected sales. Good for you!');
+                response.say('You selected sales. Will redirect to sales!');
                 break;
             case '2':
                 response.say('You need support. We will help!');
@@ -45,9 +44,9 @@ const sampleMessage = async (req, res) => {
     }
 
 
-    const newRes = response.toString();
+    const xmlRes = response.toString();
     res.type('text/xml');
-    res.send(newRes);
+    res.send(xmlRes);
 }
 
 module.exports = { sampleMessage }
