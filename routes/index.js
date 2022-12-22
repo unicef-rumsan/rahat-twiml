@@ -1,6 +1,7 @@
 const indexRouter = require("express").Router();
-const {sampleMessage} = require("../controllers/index")
+const { ivr, audio } = require("../controllers/index")
 
-indexRouter.get("/getSampleMessage", sampleMessage)
+indexRouter.get("/ivr", ivr);
+indexRouter.get("/audio", audio);
 
 module.exports = indexRouter
