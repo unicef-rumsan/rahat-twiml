@@ -2,6 +2,20 @@ const twilio = require("twilio");
 const VoiceResponse = twilio.twiml.VoiceResponse;
 const APP_URL = process.env.APP_DOMAIN;
 
+const audio = async (req,res) => {
+    const AUDIO_URL = `${APP_URL}/audio/sample-sound.mp3`;
+    const response = new VoiceResponse();
+    response.say({
+        voice: 'alice'
+    }, 'Hello from Rahat voip demo.');
+    response.play({
+        loop: 5
+    },AUDIO_URL);
+    res.type('text/xml').send(response.toString());
+}
+
+
+
 const ivr = async (req, res) => {
     const AUDIO_URL = `${APP_URL}/audio/hello.mp3`;
     const response = new VoiceResponse();
@@ -12,12 +26,12 @@ const ivr = async (req, res) => {
     response.play(AUDIO_URL);
 
     function gather() {
-        const gatherNode = response.gather({ numDigits: 1 });
+        const gatherNode = response.gather({ numDigits: 1, action: `${APP_URL}/api/v1/ivr`, method: 'POST' });
         gatherNode.say('For sales, press 1. For support, press 2.');
         // If the user doesn't enter input, loop
         response.redirect({
             uri: `${APP_URL}/api/v1/ivr`,
-            method: 'GET'
+            method: 'POST'
         });
     }
 
@@ -47,16 +61,5 @@ const ivr = async (req, res) => {
     res.send(xmlRes);
 }
 
-const audio = async (req,res) => {
-    const AUDIO_URL = `${APP_URL}/audio/sample-sound.mp3`;
-    const response = new VoiceResponse();
-    response.say({
-        voice: 'alice'
-    }, 'Hello from Rahat voip demo.');
-    response.play({
-        loop: 5
-    },AUDIO_URL);
-    res.type('text/xml').send(response.toString());
-}
 
 module.exports = { ivr,audio }
