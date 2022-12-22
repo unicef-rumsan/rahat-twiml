@@ -26,7 +26,7 @@ const ivr = async (req, res) => {
     // response.play(AUDIO_URL);
 
     function gather() {
-        const gatherNode = response.gather({ numDigits: 1, action: `${APP_URL}/api/v1/ivr`, method: 'POST' });
+        const gatherNode = response.gather({ numDigits: 1, action: `${APP_URL}/api/v1/ivr`, method: 'POST', finishOnKey: '' });
         // const gatherNode = response.gather({ numDigits: 1 });
         gatherNode.say('For sales, press 1. For support, press 2.');
         // If the user doesn't enter input, loop
@@ -36,8 +36,8 @@ const ivr = async (req, res) => {
     }
 
     // If the user entered digits, process their request
-    if (req.body?.Digits) {
-        switch (req.body?.Digits) {
+    if (req.body.Digits) {
+        switch (req.body.Digits) {
             case '1':
                 response.say('You selected sales. Will redirect to sales!');
                 break;
