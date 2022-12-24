@@ -72,18 +72,19 @@ const ivr = async (req, res) => {
 
 
 const webhook = async (req, res) => {
-    console.log("web hook called");
+    // console.log("web hook called");
 
-    const decoded = await JWT.decode(
-        req.headers["Authorization"].sub("Bearer ", ""),
-        "jcupsROB9XzVTwwEpmoAqrgBCiex620R",
-        // true,
-        // "HS256",
-        // "true",
-        // "Somleng"
-    )
+    // const decoded = await JWT.decode(
+    //     req.headers["Authorization"].sub("Bearer ", ""),
+    //     "jcupsROB9XzVTwwEpmoAqrgBCiex620R",
+    //     // true,
+    //     // "HS256",
+    //     // "true",
+    //     // "Somleng"
+    // )
 
-    console.log("deoced jwt", decoded);
+    // console.log("deoced jwt", decoded);
+    return res.status(200).json({ message: "ok" })
 }
 
 module.exports = { ivr, audio, webhook }
