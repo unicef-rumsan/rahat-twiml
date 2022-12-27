@@ -87,10 +87,10 @@ const webhook = async (req, res) => {
     return res.status(200).json({ message: "ok" })
 }
 
-const wardOne = async (req,res) => {
+const wardOne = async (req, res) => {
     const AUDIO_URL = `${APP_URL}/audio/1.mp3`;
     const response = new VoiceResponse();
-    response.play(AUDIO_URL);
+    response.play({ loop: 2 }, AUDIO_URL);
     res.type('text/xml').send(response.toString());
 }
 
