@@ -107,4 +107,19 @@ const getAudios = async (req, res) => {
     }
 }
 
-module.exports = { ivr, audio, uploadAudio, getAudios }
+const deleteAudio = async (req,res) => {
+    try {
+        const audioFile=req.params.audioFile;
+        const AUDIO_FILE=`${APP_ROOT_PATH}/assets/audio/${audioFile}`;
+        if(!fs.readdirSync(`${APP_ROOT_PATH}/assets/audio/`).includes(audioFile)){
+            return  res.status(400).json({ status: false, message: "File doesn't exist" });
+        }
+        fs.unlinkSync(AUDIO_FILE);
+        return res.status(200).json({ status: true, message: "audio deleted." });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ status: false, message: "something went wrong", error })
+    }
+}
+
+module.exports = { ivr, audio, uploadAudio, getAudios, deleteAudio }
