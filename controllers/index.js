@@ -75,7 +75,7 @@ const audio = async (req, res) => {
 
 const uploadAudio = async (req, res) => {
     try {
-        if (!req.files.audioUpload || Object.keys(req.files).length === 0) {
+        if (!req.files?.audioUpload || Object.keys(req.files).length === 0) {
             return res.status(400).json({ status: false, message: "No files were uploaded" });
         }
         //The name of the input field (i.e. "audioUpload") is used to retrieve the uploaded file
