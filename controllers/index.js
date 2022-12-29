@@ -1,20 +1,11 @@
+const fs = require("fs");
 const twilio = require("twilio");
-const JWT = require("jsonwebtoken");
+const { dirname } = require("path");
+const { checkMp3 } = require("../utils")
+
 const VoiceResponse = twilio.twiml.VoiceResponse;
 const APP_URL = process.env.APP_DOMAIN;
-
-const audio = async (req, res) => {
-    const AUDIO_URL = `${APP_URL}/audio/sample-sound.mp3`;
-    const response = new VoiceResponse();
-    response.say({
-        voice: 'alice'
-    }, 'Hello from Rahat voip demo.');
-    response.play({
-        loop: 5
-    }, AUDIO_URL);
-    res.type('text/xml').send(response.toString());
-}
-
+const APP_ROOT_PATH = dirname(require.main.filename);
 
 const ivr = async (req, res) => {
 
@@ -71,27 +62,49 @@ const ivr = async (req, res) => {
 }
 
 
-const webhook = async (req, res) => {
-    // console.log("web hook called");
-
-    // const decoded = await JWT.decode(
-    //     req.headers["Authorization"].sub("Bearer ", ""),
-    //     "jcupsROB9XzVTwwEpmoAqrgBCiex620R",
-    //     // true,
-    //     // "HS256",
-    //     // "true",
-    //     // "Somleng"
-    // )
-
-    // console.log("deoced jwt", decoded);
-    return res.status(200).json({ message: "ok" })
-}
-
-const wardOne = async (req, res) => {
-    const AUDIO_URL = `${APP_URL}/audio/1.mp3`;
+const audio = async (req, res) => {
+    const audioFile=req.params.audioFile;
+    const AUDIO_URL = `${APP_URL}/audio/${audioFile}`;
     const response = new VoiceResponse();
-    response.play({ loop: 2 }, AUDIO_URL);
+    response.play({
+        loop: 2
+    }, AUDIO_URL);
     res.type('text/xml').send(response.toString());
 }
 
-module.exports = { ivr, audio, webhook, wardOne }
+
+const uploadAudio = async (req, res) => {
+    try {
+        if (!req.files.audioUpload || Object.keys(req.files).length === 0) {
+            return res.status(400).json({ status: false, message: "No files were uploaded" });
+        }
+        //The name of the input field (i.e. "audioUpload") is used to retrieve the uploaded file
+        const audioFile = req.files.audioUpload;
+        if (!checkMp3(audioFile.name)) {
+            return res.status(400).json({ status: false, message: "Only mp3 audio is allowed." });
+        }
+
+        const uploadedAudioFiles = fs.readdirSync(`${APP_ROOT_PATH}/assets/audio/`);
+        if (uploadedAudioFiles.includes(audioFile.name)) {
+            return res.status(400).json({ status: false, message: "Audio file name already exists." });
+        }
+        const uploadPath = `${APP_ROOT_PATH}/assets/audio/${audioFile.name}`;
+        // Use the mv() method to place the file somewhere on your server
+        await audioFile.mv(uploadPath);
+        return res.status(200).json({ status: true, message: "Upload complete." });
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ status: false, message: "something went wrong", error })
+    }
+}
+
+const getAudios = async (req, res) => {
+    try {
+        const uploadedAudioFiles = fs.readdirSync(`${APP_ROOT_PATH}/assets/audio/`);
+        return res.status(200).json({ status: true, message: "success", data: uploadedAudioFiles });
+    } catch (error) {
+        return res.status(500).json({ status: false, message: "something went wrong", error })
+    }
+}
+
+module.exports = { ivr, audio, uploadAudio, getAudios }

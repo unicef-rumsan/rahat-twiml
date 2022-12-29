@@ -2,11 +2,14 @@ require("dotenv").config();
 const urlencoded = require("body-parser").urlencoded;
 const cors = require("cors");
 const express = require('express')
+const fileUpload = require("express-fileupload")
 const app = express()
 const port = process.env.PORT || 3000;
 const indexRouter = require("./routes/index")
 
 // app.use(cors())
+app.use(fileUpload());
+
 app.use(urlencoded({ extended: false }));
 
 app.use(express.static('assets'))
@@ -17,8 +20,8 @@ app.get('/', (req, res) => {
   res.status(200).json({ message: "Hello from twilio markup API" })
 })
 
-app.use("*", (req,res) => {
-    res.status(404).json({ message: "route not found "});
+app.use("*", (req, res) => {
+  res.status(404).json({ message: "route not found " });
 })
 
 app.listen(port, () => {
