@@ -7,7 +7,7 @@ const app = express()
 const port = process.env.PORT || 3000;
 const indexRouter = require("./routes/index")
 
-// app.use(cors())
+app.use(cors())
 app.use(fileUpload());
 
 app.use(urlencoded({ extended: false }));

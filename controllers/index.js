@@ -61,7 +61,6 @@ const ivr = async (req, res) => {
     res.send(xmlRes);
 }
 
-
 const audio = async (req, res) => {
     const audioFile=req.params.audioFile;
     const AUDIO_URL = `${APP_URL}/audio/${audioFile}`;
@@ -71,7 +70,6 @@ const audio = async (req, res) => {
     }, AUDIO_URL);
     res.type('text/xml').send(response.toString());
 }
-
 
 const uploadAudio = async (req, res) => {
     try {
