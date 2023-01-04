@@ -1,0 +1,17 @@
+{
+  "apiUrl": "https://api.somleng.org/2010-04-01/Accounts",
+  "auth": {
+    "sid": "4d741335-4843-44e2-b4f5-8d22cdaa7687",
+    "token": "nxRa-Le3ImMPiEum-GI4S3TG03d7VJS0Tz2odqudE4A"
+  },
+  "twiml": {
+    "playAudio": {
+      "url": "https://twiml.rahat.io/api/v1/audio",
+      "method": "GET"
+    },
+    "playIVR": {
+      "url": "https://twiml.rahat.io/api/v1/ivr",
+      "method": "POST"
+    }
+  }
+}
