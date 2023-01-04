@@ -153,7 +153,8 @@ const createCall = async (req, res) => {
       {
         To,
         From,
-        Url,
+        Url, 
+        Method: "GET"
         // Method: TWIML.WARD_ONE.method,
       },
       somleng_auth
