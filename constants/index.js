@@ -1,4 +1,4 @@
-const somleng = require("./somleng.json");
+const somleng = require("../config/somleng.json");
 
 const somlengConfig = {
   api: somleng.apiUrl,

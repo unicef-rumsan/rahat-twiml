@@ -3,7 +3,7 @@ const twilio = require("twilio");
 const { dirname } = require("path");
 const axios = require("axios");
 const { checkMp3 } = require("../utils");
-const { somlengConfig, somleng_auth, twilioBaseUrl } = require("../config");
+const { somleng_auth, twilioBaseUrl } = require("../constants");
 
 const VoiceResponse = twilio.twiml.VoiceResponse;
 const APP_URL = process.env.APP_DOMAIN;
